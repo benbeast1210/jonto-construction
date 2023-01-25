@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "sass": "^1.57.1",
+    "sass-convert": "^0.5.2"
+  },
+  "dependencies": {
+    "bootstrap": "^5.2.3",
+    "jquery": "^3.6.3",
+    "scss": "^0.2.4",
+    "vue": "^3.2.45"
+  }
+}
