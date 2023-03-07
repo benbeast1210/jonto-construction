@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Jonto Construction</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<style>
+		:root {
+			--bg: #e3e4e8;
+			--fg: #17181c;
+			font-size: calc(12px + (16 - 12)*(100vw - 480px)/(1280 - 480));
+		}
+
+		body,
+		button {
+			font: 0.6666666667em Helvetica, sans-serif;
+		}
+
+		body {
+			background: var(--bg);
+			color: var(--fg);
+			display: flex;
+			height: 100vh;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			margin: 0;
+		}
+
+		button {
+			background: transparent;
+			border: 0.15em solid;
+			color: #737a8c;
+			font-size: 1.5em;
+			padding: 0.75rem 1.5rem;
+			-webkit-appearance: none;
+			animation: showReplay 2.5s;
+		}
+
+		button:hover,
+		button:focus,
+		button:active:not(:hover) {
+			opacity: 1;
+		}
+
+		button:active {
+			background: var(--fg);
+			border-color: var(--fg);
+			color: var(--bg);
+		}
+
+		button:focus {
+			outline: 0;
+		}
+
+		/* Emoticon parts */
+		.mouth,
+		.arm,
+		.curtain,
+		.table {
+			will-change: transform;
+		}
+
+		.container,
+		.trajectory,
+		.curtain {
+			background: inherit;
+		}
+
+		.guy,
+		.arm,
+		.trajectory {
+			border: 0.4em solid transparent;
+		}
+
+		.guy,
+		.arm,
+		.legs {
+			border-right: 0.4em solid;
+		}
+
+		.guy,
+		.legs {
+			border-left: 0.4em solid;
+		}
+
+		.eye,
+		.mouth,
+		.arm {
+			position: absolute;
+		}
+
+		.eye,
+		.arm {
+			border-radius: 50%;
+		}
+
+		.table,
+		.legs {
+			height: 1.6em;
+		}
+
+		.container {
+			height: 10em;
+			min-width: 37.5em;
+			position: relative;
+		}
+
+		.container>div {
+			position: absolute;
+		}
+
+		.guy {
+			border-radius: 15% / 60%;
+			width: 13em;
+			height: 5em;
+		}
+
+		.eye {
+			border: 0.4em solid;
+			width: 1em;
+			height: 1em;
+			top: 15%;
+			left: 45%;
+			animation: eyes 2s linear;
+		}
+
+		.eye+.eye {
+			left: 80%;
+		}
+
+		.mouth {
+			box-shadow: 0 0 0 0.2em currentColor inset;
+			width: 1.6em;
+			height: 1.6em;
+			top: 48%;
+			left: 64%;
+			animation: mouth 2s cubic-bezier(0.17, 0.81, 0.29, 0.94);
+		}
+
+		.arm {
+			width: 2.5em;
+			height: 3.5em;
+			top: -25%;
+			left: -10%;
+			transform-origin: 80% 80%;
+			transform: rotate(45deg);
+			animation: arms 2s cubic-bezier(0, 1, 0, 1);
+		}
+
+		.arm+.arm {
+			left: 90%;
+		}
+
+		.trajectory {
+			border-top: 0.4em solid;
+			border-radius: 50%;
+			top: 4em;
+			left: 48%;
+			width: 6em;
+			height: 4em;
+		}
+
+		.curtain {
+			width: 5em;
+			height: 5em;
+			transform: translate(-2em, -1.9em) rotate(135deg);
+			transform-origin: 100% 100%;
+			animation: showTrajectory 2s linear;
+		}
+
+		.table {
+			border-bottom: 0.4em solid;
+			width: 12em;
+			top: 3.2em;
+			left: 57%;
+			transform: translateX(4.2em);
+			transform-origin: -31% 50%;
+			animation: table 2s linear;
+			border-color: white;
+		}
+
+		.legs {
+			margin: auto;
+			width: 70%;
+			border-color: white;
+		}
+
+		.no-anim div,
+		.no-anim+button {
+			animation: none;
+		}
+
+		/* Animations */
+		@keyframes eyes {
+
+			from,
+			30%,
+			38%,
+			70% {
+				background: var(--fg);
+				border: 0;
+				transform: translate(0.4em, 0.4em) scale(1, 1);
+			}
+
+			34% {
+				background: var(--fg);
+				border: 0;
+				transform: translate(0.4em, 0.4em) scale(1, 0);
+			}
+
+			74.9% {
+				background: var(--fg);
+				border: 0;
+				transform: translate(0.4em, 0.4em) scale(1.5, 0);
+			}
+
+			75%,
+			to {
+				background: transparent;
+				border: 0.4em solid;
+				transform: translate(0, 0);
+			}
+		}
+
+		@keyframes mouth {
+
+			from,
+			75% {
+				height: 0.2em;
+				transform: translateY(0.8em);
+			}
+
+			87.5%,
+			to {
+				height: 1.6em;
+				transform: translateY(0);
+			}
+		}
+
+		@keyframes arms {
+
+			from,
+			75% {
+				transform: rotate(155deg);
+			}
+
+			to {
+				transform: rotate(45deg);
+			}
+		}
+
+		@keyframes showTrajectory {
+
+			from,
+			75% {
+				transform: translate(-2em, -1.9em) rotate(45deg);
+			}
+
+			93%,
+			to {
+				transform: translate(-2em, -1.9em) rotate(136deg);
+			}
+		}
+
+		@keyframes table {
+
+			from,
+			75% {
+				transform: translateX(3.6em) rotate(-180deg);
+			}
+
+			93% {
+				transform: translateX(3.6em) rotate(0);
+			}
+
+			to {
+				transform: translateX(4.2em) rotate(0);
+			}
+		}
+
+		@keyframes showReplay {
+
+			from,
+			99% {
+				visibility: hidden;
+			}
+
+			to {
+				visibility: visible;
+			}
+		}
+
+		@media screen and (prefers-color-scheme: dark) {
+			:root {
+				--bg: #17181c;
+				--fg: #e3e4e8;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Oh No! Error 404: Page Not Found!</h1>
+	<button onclick="window.location.href = 'https://benbeast1210.github.io/jonto-construction/';">
+		Back to Home Page </button>
+
+	<div class="container">
+		<div class="guy">
+			<div class="eye"></div>
+			<div class="eye"></div>
+			<div class="mouth"></div>
+			<div class="arm"></div>
+			<div class="arm"></div>
+		</div>
+		<div class="trajectory">
+			<div class="curtain"></div>
+		</div>
+		<div class="table">
+			<div class="legs"></div>
+		</div>
+	</div>
+	<button type="button">Replay</button>
+	<!-- 
+	<footer>
+		<div class="container">
+			<div class="row">
+
+				<div class="col-lg-4 col-md-6">
+					<h3>Site Map</h3>
+					<ul class="list-unstyled three-column">
+						<li>Home</li>
+						<li>Our Work</li>
+						<li>Contact</li>
+						<li>Button</li>
+						<li>Button</li>
+						<li>Button</li>
+						<li>Button</li>
+						<li>Button</li>
+						<li>Button</li>
+					</ul>
+					<ul class="list-unstyled socila-list">
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+						<li><img src="http://placehold.it/48x48" alt="" /></li>
+					</ul>
+				</div>
+
+				<div class="col-lg-4 col-md-6">
+					<h3>Reviews</h3>
+					<div class="media">
+						<a href="#" class="pull-left">
+							<img src="http://placehold.it/64x64" alt="" class="media-object" />
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">John Wayne</h4>
+							<p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit."</p>
+						</div>
+					</div>
+
+					<div class="media">
+						<a href="#" class="pull-left">
+							<img src="http://placehold.it/64x64" alt="" class="media-object" />
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Jane Doe</h4>
+							<p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit."</p>
+						</div>
+					</div>
+
+					<div class="media">
+						<a href="#" class="pull-left">
+							<img src="http://placehold.it/64x64" alt="" class="media-object" />
+						</a>
+						<div class="media-body">
+							<h4 class="media-heading">Wylie Coyote</h4>
+							<p>"Lorem ipsum dolor sit amet, consectetur adipisicing elit."</p>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-lg-4">
+					<h3>Our Work</h3>
+					<img class="img-thumbnail" src="http://placehold.it/150x100" alt="" />
+					<img class="img-thumbnail" src="http://placehold.it/150x100" alt="" />
+					<img class="img-thumbnail" src="http://placehold.it/150x100" alt="" />
+					<img class="img-thumbnail" src="http://placehold.it/150x100" alt="" />
+				</div>
+
+			</div>
+		</div>
+		<div class="copyright text-center">
+			Copyright &copy; 2023 <span>Jonto Construction</span>
+		</div>
+	</footer> -->
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+	document.querySelector("button").addEventListener("click", () => {
+		let container = document.querySelector(".container"),
+			noAnimClass = "no-anim",
+			containerCL = container.classList;
+
+		containerCL.add(noAnimClass);
+		setTimeout(() => {
+			containerCL.remove(noAnimClass);
+		}, 0);
+	});
+</script>
+
+</html>
