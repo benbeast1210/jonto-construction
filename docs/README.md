@@ -16,4 +16,3 @@
 >- Source reviews
 >- Decide which projects to showcase
 >- Create endpoint for Contact form data (private Orders site that requires login)
->- 
