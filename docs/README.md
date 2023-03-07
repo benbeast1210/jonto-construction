@@ -14,4 +14,6 @@
 >- Custom background images that randomly appear with each press of the arrow/auto slide move after timer, behind consistent text and links
 >- Social media tie-ins for Facebook, Yelp, etc.
 >- Source reviews
->- Decide on which projects to showcase
+>- Decide which projects to showcase
+>- Create endpoint for Contact form data (private Orders site that requires login)
+>- 
